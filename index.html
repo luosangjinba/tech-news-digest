@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Pulse - 科技前沿资讯</title>
+    <meta name="description" content="AI、机器人、生物医药、航天科技每日资讯聚合">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-hover: #22222e;
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --accent-ai: #6366f1;
+            --accent-robot: #22d3ee;
+            --accent-bio: #10b981;
+            --accent-space: #f59e0b;
+            --border: #2a2a3a;
+            --gradient-ai: linear-gradient(135deg, #6366f1, #8b5cf6);
+            --gradient-robot: linear-gradient(135deg, #22d3ee, #06b6d4);
+            --gradient-bio: linear-gradient(135deg, #10b981, #34d399);
+            --gradient-space: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-ai);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f0f0f5, #8888a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .category-tag.ai {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+        }
+        .category-tag.ai:hover { background: var(--gradient-ai); color: white; }
+
+        .category-tag.robotics {
+            background: rgba(34, 211, 238, 0.15);
+            border-color: rgba(34, 211, 238, 0.3);
+            color: #a5f3fc;
+        }
+        .category-tag.robotics:hover { background: var(--gradient-robot); color: white; }
+
+        .category-tag.bio {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+        .category-tag.bio:hover { background: var(--gradient-bio); color: white; }
+
+        .category-tag.space {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+        }
+        .category-tag.space:hover { background: var(--gradient-space); color: white; }
+
+        /* Hero */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #f0f0f5 0%, #a5b4fc 50%, #f0f0f5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .date-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            padding: 40px 0;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .news-card.ai::before { background: var(--gradient-ai); }
+        .news-card.robotics::before { background: var(--gradient-robot); }
+        .news-card.bio::before { background: var(--gradient-bio); }
+        .news-card.space::before { background: var(--gradient-space); }
+        .news-card.hackernews::before { background: linear-gradient(135deg, #ff6600, #ff9500); }
+        .news-card.reddit::before { background: linear-gradient(135deg, #ff4500, #ff6b3d); }
+        .news-card.github::before { background: linear-gradient(135deg, #333, #666); }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .news-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .news-source.ai { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+        .news-source.robotics { background: rgba(34, 211, 238, 0.2); color: #a5f3fc; }
+        .news-source.bio { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+        .news-source.space { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+        .news-source.hackernews { background: rgba(255, 102, 0, 0.2); color: #ff9500; }
+        .news-source.reddit { background: rgba(255, 69, 0, 0.2); color: #ff8c69; }
+        .news-source.github { background: rgba(255, 255, 255, 0.1); color: #a5b4fc; }
+
+        .news-title {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .news-stats {
+            display: flex;
+            gap: 12px;
+        }
+
+        .news-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--accent-ai);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .news-grid { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; text-align: center; }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-ai);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <div>
+                        <div class="logo-text">Tech Pulse</div>
+                        <div class="tagline">AI · 机器人 · 生物医药 · 航天科技</div>
+                    </div>
+                </div>
+                <div class="categories">
+                    <span class="category-tag ai">🤖 AI</span>
+                    <span class="category-tag robotics">🦾 机器人</span>
+                    <span class="category-tag bio">🧬 生物医药</span>
+                    <span class="category-tag space">🚀 航天科技</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>科技前沿资讯</h1>
+                <p>每日聚合来自 GitHub、Reddit、Hacker News 和 RSS 源的最新科技动态</p>
+                <div class="date-display">
+                    <span>📅</span>
+                    <span id="current-date"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="news-grid" id="news-grid">
+                <!-- News cards will be inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>🚀 由 OpenClaw 自动生成 · <a href="https://github.com/luosangjinba/tech-news-digest">GitHub</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current date
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('zh-CN', dateOptions);
+
+        // News data will be injected here
+        const newsData = [{"title": "Satellite firm pauses imagery after revealing Iran's attacks on US bases | Planet wants to prevent “adversarial actors” from using images for “Battle Damage Assessment” purposes.", "url": "https://arstechnica.com/space/2026/03/satellite-firm-pauses-imagery-after-revealing-irans-attacks-on-us-bases/", "score": 3681, "comments": 193, "category": "Space", "source": "Reddit/space"}, {"title": "Tell HN: I'm 60 years old. Claude Code has re-ignited a passion", "url": "", "score": 742, "time": 1772841906, "category": "AI", "source": "Hacker News"}, {"title": "I'm a 4th year Biochemistry PhD student and I made a tool to help researchers see when and where proteins move", "url": "https://i.redd.it/5pr7c47yybng1.gif", "score": 623, "comments": 29, "category": "Biotech", "source": "Reddit/labrats"}, {"title": "China designates space sector an “emerging pillar industry,” sets deep space ambitions in new 5-year plan", "url": "https://spacenews.com/china-designates-space-sector-an-emerging-pillar-industry-sets-deep-space-ambitions-in-new-economic-blueprint/", "score": 467, "comments": 34, "category": "Space", "source": "Reddit/space"}, {"title": "Spent a year building a transforming drone, now I'm open sourcing it", "url": "https://v.redd.it/riwz92tpjhng1", "score": 375, "comments": 18, "category": "Robotics", "source": "Reddit/robotics"}, {"title": "LLMs work best when the user defines their acceptance criteria first", "url": "https://blog.katanaquant.com/p/your-llm-doesnt-write-correct-code", "score": 317, "time": 1772846277, "category": "AI", "source": "Hacker News"}, {"title": "Xiaomi Shows Humanoid Robots Working Autonomously on Production Lines with 90.2% Success Rate", "url": "https://v.redd.it/yhgwx96jdgng1", "score": 223, "comments": 72, "category": "Robotics", "source": "Reddit/robotics"}, {"title": "NASA has shuffled its Artemis rockets. But what of the lunar landers?", "url": "https://arstechnica.com/space/2026/03/nasa-has-shuffled-its-artemis-rockets-but-what-of-the-lunar-landers/", "score": 188, "comments": 54, "category": "Space", "source": "Reddit/SpaceX"}, {"title": "Uploading Pirated Books via BitTorrent Qualifies as Fair Use, Meta Argues", "url": "https://torrentfreak.com/uploading-pirated-books-via-bittorrent-qualifies-as-fair-use-meta/", "score": 186, "time": 1772875120, "category": "AI", "source": "Hacker News"}, {"title": "Qwen3-Coder-Next is the top model in SWE-rebench @ Pass 5. I think everyone missed it.", "url": "https://i.redd.it/s4taslgvukng1.png", "score": 130, "comments": 57, "category": "AI", "source": "Reddit/LocalLLaMA"}, {"title": "Legal fight over SpaceX beach closures hits Texas Supreme Court", "url": "https://www.texastribune.org/2026/03/05/texas-supreme-court-boca-chica-cameron-county-spacex-beach-access/", "score": 96, "comments": 19, "category": "Space", "source": "Reddit/SpaceX"}, {"title": "Starship Development Thread #62", "url": "https://www.reddit.com/r/spacex/comments/1p2s1q4/starship_development_thread_62/", "score": 87, "comments": 1215, "category": "Space", "source": "Reddit/SpaceX"}, {"title": "OpenAI launches GPT-5.4: New model hits 83% on pro-level knowledge benchmark", "url": "https://interestingengineering.com/ai-robotics/gpt-5-4-openai-ai-model-release", "score": 70, "comments": 30, "category": "AI", "source": "Reddit/Artificial"}, {"title": "What are the best nsfw ai models with no restrictions?", "url": "https://www.reddit.com/r/LocalLLaMA/comments/1rn7k0e/what_are_the_best_nsfw_ai_models_with_no/", "score": 45, "comments": 15, "category": "AI", "source": "Reddit/LocalLLaMA"}, {"title": "Pentagon taps former DOGE official to lead its AI efforts", "url": "https://www.reuters.com/world/us/pentagon-taps-former-doge-official-lead-its-ai-efforts-2026-03-06/", "score": 42, "comments": 5, "category": "AI", "source": "Reddit/Artificial"}, {"title": "RIVR unveils RIVR TWO, their own next-generation robot designed for doorstep delivery and AI data collection at scale", "url": "https://v.redd.it/hvg63wkaojng1", "score": 32, "comments": 13, "category": "Robotics", "source": "Reddit/robotics"}, {"title": "[P] NanoJudge: Instead of prompting a big LLM once, it prompts a tiny LLM thousands of times.", "url": "https://www.reddit.com/r/MachineLearning/comments/1rn8g9a/p_nanojudge_instead_of_prompting_a_big_llm_once/", "score": 23, "comments": 12, "category": "AI", "source": "Reddit/MachineLearning"}, {"title": "Self-Portrait by Ernst Mach (1886)", "url": "https://publicdomainreview.org/collection/self-portrait-by-ernst-mach-1886/", "score": 22, "time": 1772754506, "category": "AI", "source": "Hacker News"}, {"title": "Playground to test Open-Source LLMs in action (GPT-OSS, Qwen3.5, DeepSeek) with Tools and RAG [Free and No signup]", "url": "https://devforth.io/lab/chat/", "score": 17, "comments": 1, "category": "AI", "source": "Reddit/LocalLLaMA"}, {"title": "RNAi causing target gene expression to paradoxically go up????", "url": "https://www.reddit.com/r/labrats/comments/1rn47sv/rnai_causing_target_gene_expression_to/", "score": 17, "comments": 15, "category": "Biotech", "source": "Reddit/labrats"}, {"title": "‘It means missile defence on data centres’: drone strikes raises doubts over Gulf as AI superpower | US-Israel war on Iran | The Guardian", "url": "https://www.theguardian.com/world/2026/mar/07/it-means-missile-defence-on-data-centres-drone-strikes-raises-doubts-over-gulf-as-ai-superpower", "score": 14, "comments": 2, "category": "AI", "source": "Reddit/Artificial"}, {"title": "Migrating from Heroku to Magic Containers", "url": "https://bunny.net/blog/migrating-from-heroku-to-magic-containers/", "score": 13, "time": 1772712733, "category": "AI", "source": "Hacker News"}, {"title": "All Space Questions thread for week of March 01, 2026", "url": "https://www.reddit.com/r/space/comments/1ri2gvu/all_space_questions_thread_for_week_of_march_01/", "score": 12, "comments": 46, "category": "Space", "source": "Reddit/space"}, {"title": "[R] Anyone experimenting with heterogeneous (different base LLMs) multi-agent systems for open-ended scientific reasoning or hypothesis generation?", "url": "https://www.reddit.com/r/MachineLearning/comments/1rm6lqd/r_anyone_experimenting_with_heterogeneous/", "score": 6, "comments": 11, "category": "AI", "source": "Reddit/MachineLearning"}, {"title": "Why do we not use Hirudin gene from the Leech directly but instead use the Recombinant DNA Technology and obtain Hirudin from a plant's seed?", "url": "https://www.reddit.com/r/biotechnology/comments/1rams1h/why_do_we_not_use_hirudin_gene_from_the_leech/", "score": 4, "comments": 4, "category": "Biotech", "source": "Reddit/biotechnology"}, {"title": "Global status of genome editing versus transgenesis legislation in plants and the current EU situation", "url": "https://www.nature.com/articles/s44383-025-00016-2", "score": 2, "comments": 0, "category": "Biotech", "source": "Reddit/biotechnology"}, {"title": "Pledge to bring gene editing to Scotland's farming network", "url": "https://www.scotsman.com/hays-way/pledge-to-bring-gene-editing-to-scotlands-farming-network-5603168", "score": 2, "comments": 0, "category": "Biotech", "source": "Reddit/biotechnology"}, {"title": "[P] Domain specific LoRA fine tuning on consumer hardware", "url": "https://www.reddit.com/r/MachineLearning/comments/1rmkcek/p_domain_specific_lora_fine_tuning_on_consumer/", "score": 0, "comments": 0, "category": "AI", "source": "Reddit/MachineLearning"}, {"title": "Ki Editor - an editor that operates on the AST", "url": "https://ki-editor.org/", "source": "Hacker News", "category": "Tech"}, {"title": "The yoghurt delivery women combatting loneliness in Japan", "url": "https://www.bbc.com/travel/article/20260302-the-yoghurt-delivery-women-combatting-loneliness-in-japan", "source": "Hacker News", "category": "Tech"}];
+        
+        // Render news cards
+        const grid = document.getElementById('news-grid');
+        
+        if (newsData && newsData.length > 0) {
+            newsData.forEach(news => {
+                const card = document.createElement('article');
+                card.className = `news-card ${news.category || 'ai'}`;
+                card.onclick = () => window.open(news.url, '_blank');
+                
+                card.innerHTML = `
+                    <span class="news-source ${news.category || 'ai'}">${news.source}</span>
+                    <h3 class="news-title">${news.title}</h3>
+                    <div class="news-meta">
+                        <span>${news.time || '最近'}</span>
+                        <div class="news-stats">
+                            ${news.score ? `<span class="news-stat">⬆️ ${news.score}</span>` : ''}
+                            ${news.comments ? `<span class="news-stat">💬 ${news.comments}</span>` : ''}
+                            ${news.stars ? `<span class="news-stat">⭐ ${news.stars}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        } else {
+            grid.innerHTML = '<p style="text-align:center;color:var(--text-secondary);grid-column:1/-1;">暂无新闻数据</p>';
+        }
+    </script>
+</body>
+</html>

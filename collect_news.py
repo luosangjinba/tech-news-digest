@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 # 配置
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "8644933224:AAGI5L37e6JZP1Vxd_3NmyZNYkbbDN1pxxg")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "8778530122:AAE9wK2Yu0uIGAPxvMOnvRzh_slkJ7BdLn4")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "6276858705")
 
 REDDIT_SUBREDDITS = {
