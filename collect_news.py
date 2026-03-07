@@ -7,7 +7,7 @@ Tech News Digest - 采集 AI、机器人、生物医药、航天科技 新闻
 import os
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import defaultdict
 
 # 配置
@@ -21,9 +21,15 @@ REDDIT_SUBREDDITS = {
     "Space": ["space", "SpaceX", "rocketlab", "NASA"]
 }
 
-HN_CATEGORIES = ["ai", "programming", "hardware", "biology", "space"]
+# 关键词配置
+KEYWORDS = {
+    "AI": ["ai", "llm", "gpt", "model", "ml", "machine learning", "neural", "gemma", "claude", "openai", "deepseek", "chatgpt", "anthropic", "mistral"],
+    "Robotics": ["robot", "drone", "automation", "autonomous", "ros", "humanoid", "boston dynamics"],
+    "Biotech": ["gene", "drug", "bio", "crispr", "protein", "clinical", "vaccine", "mrna", "biotech", "genome"],
+    "Space": ["space", "rocket", "nasa", "spacex", "satellite", "mars", "launch", "asteroid", "starlink", "blue origin"]
+}
 
-OUTPUT_FILE = "daily_digest.md"
+OUTPUT_DIR = "digests"
 
 def send_telegram_message(message):
     """发送 Telegram 消息"""
@@ -41,14 +47,14 @@ def send_telegram_message(message):
         print(f" Telegram error: {e}")
         return None
 
-def get_github_trending(language="", since="daily"):
-    """获取 GitHub Trending"""
+def get_github_trending():
+    """获取 GitHub 新热门仓库"""
     url = "https://api.github.com/search/repositories"
     params = {
-        "q": "created:>2026-03-01",
+        "q": "created:>2026-02-01",
         "sort": "stars",
         "order": "desc",
-        "per_page": 20
+        "per_page": 30
     }
     try:
         resp = requests.get(url, params=params, timeout=10)
@@ -58,7 +64,7 @@ def get_github_trending(language="", since="daily"):
         print(f"  Error: {e}")
     return []
 
-def get_reddit_hot(subreddit, limit=10):
+def get_reddit_hot(subreddit, limit=15):
     """获取 Reddit 热帖"""
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
     headers = {"User-Agent": "TechNewsBot/1.0"}
@@ -81,7 +87,7 @@ def get_reddit_hot(subreddit, limit=10):
         pass
     return []
 
-def get_hacker_news(limit=10):
+def get_hacker_news(limit=20):
     """获取 Hacker News Top"""
     url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     try:
@@ -114,85 +120,97 @@ def filter_by_keywords(items, keywords):
             filtered.append(item)
     return filtered
 
-def format_telegram(data):
+def format_telegram(data, date_str):
     """生成 Telegram 消息"""
-    msg = "📡 <b>Tech News Digest</b>\n"
-    msg += f"<i>{datetime.now().strftime('%Y-%m-%d')}</i>\n\n"
+    msg = f"📡 <b>Tech News Digest</b> - {date_str}\n\n"
     
-    # GitHub Trending
-    msg += "🔥 <b>GitHub Trending</b>\n"
+    # GitHub
+    msg += "🔥 <b>GitHub</b>\n"
     for repo in data.get("github", [])[:5]:
-        name = repo.get("name", "")[:30]
-        desc = repo.get("description", "")[:50] if repo.get("description") else ""
+        name = repo.get("name", "")[:25]
         stars = repo.get("stargazers_count", 0)
         msg += f"• {name} ⭐{stars}\n"
     msg += "\n"
     
     # Reddit
-    msg += "📱 <b>Reddit</b>\n"
     for category, posts in data.get("reddit", {}).items():
         emoji = {"AI": "🤖", "Robotics": "🦾", "Biotech": "🧬", "Space": "🚀"}.get(category, "📱")
         msg += f"{emoji} <b>{category}</b>\n"
         for post in posts[:3]:
-            title = post.get("title", "")[:60]
+            title = post.get("title", "")[:50]
             score = post.get("score", 0)
             if score > 0:
-                msg += f"• {title} (⬆️{score})\n"
+                msg += f"• {title} ({score}⬆)\n"
         msg += "\n"
     
-    # Hacker News
-    msg += "📰 <b>Hacker News</b>\n"
+    # HN
+    msg += "📰 <b>HN</b>\n"
     for post in data.get("hn", [])[:3]:
-        title = post.get("title", "")[:60]
+        title = post.get("title", "")[:50]
         score = post.get("score", 0)
-        if score > 50:
-            msg += f"• {title} (⬆️{score})\n"
+        if score > 30:
+            msg += f"• {title} ({score}⬆)\n"
     
-    msg += f"\n<a href='https://github.com/luosangjinba/tech-news-digest'>GitHub</a>"
+    msg += f"\n<a href='https://luosangjinba.github.io/tech-news-digest/'>🌐 Web</a>"
     return msg
 
-def format_markdown(data):
-    """生成 Markdown 格式"""
+def format_day_md(data, date_str):
+    """生成单日 Markdown"""
     md = []
-    md.append(f"# Tech News Digest - {datetime.now().strftime('%Y-%m-%d')}")
+    md.append(f"# {date_str}")
     md.append("")
-    md.append("> 聚焦: AI | 机器人 | 生物医药 | 航天科技")
-    md.append("")
-    md.append("---")
-    md.append("")
-    
-    # GitHub Trending
     md.append("## 🔥 GitHub Trending")
     md.append("")
-    trending = data.get("github", [])
-    for i, repo in enumerate(trending[:10], 1):
-        md.append(f"{i}. **{repo.get('name', '')}** - {repo.get('description', '')[:80]}")
-        md.append(f"   - ⭐ {repo.get('stargazers_count', 0)} | 👤 {repo.get('owner', {}).get('login', '')}")
+    for repo in data.get("github", [])[:10]:
+        name = repo.get("name", "")
+        desc = repo.get("description", "")[:80] if repo.get("description") else "无描述"
+        stars = repo.get("stargazers_count", 0)
+        url = repo.get("html_url", "")
+        md.append(f"- [{name}]({url}) ⭐{stars}")
+        md.append(f"  - {desc}")
     md.append("")
     
-    # Reddit
-    md.append("## 📱 Reddit Hot")
-    md.append("")
+    md.append("## 📱 Reddit")
     for category, posts in data.get("reddit", {}).items():
         md.append(f"### {category}")
         for post in posts[:5]:
-            md.append(f"- [{post.get('title', '')}]({post.get('url', '')}) (⬆️ {post.get('score', 0)})")
+            title = post.get("title", "")
+            url = post.get("url", "")
+            score = post.get("score", 0)
+            md.append(f"- [{title}]({url}) ({score}⬆)")
         md.append("")
     
-    # Hacker News
     md.append("## 📰 Hacker News")
-    md.append("")
     for post in data.get("hn", [])[:10]:
-        md.append(f"- [{post.get('title', '')}]({post.get('url', '')}) (⬆️ {post.get('score', 0)})")
+        title = post.get("title", "")
+        url = post.get("url", "")
+        score = post.get("score", 0)
+        md.append(f"- [{title}]({url}) ({score}⬆)")
     md.append("")
-    
-    md.append("---")
-    md.append(f"*Generated at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*")
     
     return "\n".join(md)
 
+def update_index(dates):
+    """更新索引文件"""
+    md = ["# Tech News Digest", ""]
+    md.append("> 聚焦: AI | 机器人 | 生物医药 | 航天科技")
+    md.append("")
+    md.append("## 按日期")
+    md.append("")
+    for d in sorted(dates, reverse=True):
+        md.append(f"- [{d}](digests/{d}.md)")
+    md.append("")
+    md.append("---")
+    md.append("*由 GitHub Actions 自动生成*")
+    
+    with open("index.md", "w", encoding="utf-8") as f:
+        f.write("\n".join(md))
+
 def main():
-    print("📡 采集新闻数据...")
+    today = datetime.now()
+    date_str = today.strftime("%Y-%m-%d")
+    
+    print(f"📡 采集 {date_str} 新闻...")
     
     data = {
         "github": [],
@@ -200,50 +218,49 @@ def main():
         "hn": []
     }
     
-    # GitHub Trending
-    print("  - GitHub Trending...")
+    # GitHub
+    print("  - GitHub...")
     trending = get_github_trending()
-    data["github"] = trending[:10]
+    # 按关键词过滤
+    all_ai_keywords = KEYWORDS["AI"] + KEYWORDS["Robotics"] + KEYWORDS["Biotech"] + KEYWORDS["Space"]
+    data["github"] = filter_by_keywords(trending, all_ai_keywords)[:10]
     
     # Reddit
     print("  - Reddit...")
     for category, subreddits in REDDIT_SUBREDDITS.items():
         for sub in subreddits:
-            posts = get_reddit_hot(sub, limit=15)
-            # 简单关键词过滤
-            keywords = {
-                "AI": ["ai", "llm", "gpt", "model", "ml", "machine learning", "neural", "gemma", "claude", "openai", "gemma", "deepseek"],
-                "Robotics": ["robot", "drone", "automation", "autonomous", "ros", "humanoid"],
-                "Biotech": ["gene", "drug", "bio", "crispr", "protein", "clinical", "vaccine", "mrna"],
-                "Space": ["space", "rocket", "nasa", "spacex", "satellite", "mars", "launch", "asteroid"]
-            }
-            filtered = filter_by_keywords(posts, keywords.get(category, []))
+            posts = get_reddit_hot(sub, limit=20)
+            filtered = filter_by_keywords(posts, KEYWORDS.get(category, []))
             data["reddit"][category].extend(filtered[:5])
     
     # Hacker News
     print("  - Hacker News...")
-    hn_posts = get_hacker_news(20)
-    # 简单过滤
-    hn_keywords = ["ai", "llm", "robot", "space", "nasa", "bio", "gene", "rocket", "ml"]
+    hn_posts = get_hacker_news(30)
+    hn_keywords = KEYWORDS["AI"] + KEYWORDS["Robotics"] + KEYWORDS["Biotech"] + KEYWORDS["Space"]
     data["hn"] = filter_by_keywords(hn_posts, hn_keywords)[:10]
     
-    # 生成 Markdown
-    print("📝 生成报告...")
-    md_content = format_markdown(data)
+    # 创建输出目录
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(md_content)
+    # 保存单日文件
+    day_file = f"{OUTPUT_DIR}/{date_str}.md"
+    with open(day_file, "w", encoding="utf-8") as f:
+        f.write(format_day_md(data, date_str))
+    print(f"✅ 已保存 {day_file}")
+    
+    # 更新索引
+    existing_dates = [f.replace(".md", "") for f in os.listdir(OUTPUT_DIR) if f.endswith(".md")]
+    update_index(existing_dates)
+    print("✅ 已更新 index.md")
     
     # 发送到 Telegram
     print("📨 发送到 Telegram...")
-    tg_msg = format_telegram(data)
+    tg_msg = format_telegram(data, date_str)
     result = send_telegram_message(tg_msg)
     if result and result.get("ok"):
         print("✅ Telegram 消息已发送")
     else:
         print("⚠️ Telegram 发送失败")
-    
-    print(f"✅ 已保存到 {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
