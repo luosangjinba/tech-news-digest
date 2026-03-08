@@ -11,33 +11,21 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-          
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests feedparser
-          
+      
+      - name: Install deps
+        run: pip install requests feedparser
+      
       - name: Fetch news
-        run: |
-          python scripts/fetch_news.py
-          
-      - name: Push latest news to Telegram
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          python scripts/send_telegram.py hourly
-          
+        run: python scripts/fetch_news.py
+      
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
