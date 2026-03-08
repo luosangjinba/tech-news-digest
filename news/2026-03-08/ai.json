@@ -1,0 +1,62 @@
+[
+  {
+    "title": "LLM Writing Tropes.md",
+    "link": "https://tropes.fyi/tropes-md",
+    "source": "Hacker News",
+    "title_zh": "LLM Writing Tropes.md"
+  },
+  {
+    "title": "Autoresearch: Agents researching on single-GPU nanochat training automatically",
+    "link": "https://github.com/karpathy/autoresearch",
+    "source": "Hacker News",
+    "title_zh": "自动搜索：自动研究单GPU纳米聊天训练的代理"
+  },
+  {
+    "title": "A decade of Docker containers",
+    "link": "https://cacm.acm.org/research/a-decade-of-docker-containers/",
+    "source": "Hacker News",
+    "title_zh": "十年的Docker容器"
+  },
+  {
+    "title": "Google just gave Sundar Pichai a $692M pay package",
+    "link": "https://techcrunch.com/2026/03/07/google-just-gave-sundar-pichai-a-692m-pay-package/",
+    "source": "TechCrunch",
+    "title_zh": "谷歌刚刚向Sundar Pichai提供了6.92亿美元的薪酬待遇"
+  },
+  {
+    "title": "OpenAI robotics lead Caitlin Kalinowski quits in response to Pentagon deal",
+    "link": "https://techcrunch.com/2026/03/07/openai-robotics-lead-caitlin-kalinowski-quits-in-response-to-pentagon-deal/",
+    "source": "TechCrunch",
+    "title_zh": "OpenAI机器人负责人Caitlin Kalinowski辞职以回应五角大楼的交易"
+  },
+  {
+    "title": "OpenAI delays ChatGPT’s ‘adult mode’ again",
+    "link": "https://techcrunch.com/2026/03/07/openai-delays-chatgpts-adult-mode-again/",
+    "source": "TechCrunch",
+    "title_zh": "OpenAI再次延迟ChatGPT的“成人模式”"
+  },
+  {
+    "title": "Microsoft, Google, Amazon say Anthropic Claude remains available to non-defense customers",
+    "link": "https://techcrunch.com/2026/03/06/microsoft-anthropic-claude-remains-available-to-customers-except-the-defense-department/",
+    "source": "TechCrunch",
+    "title_zh": "微软、谷歌、亚马逊表示， Anthropic Claude仍可供非国防客户使用"
+  },
+  {
+    "title": "Anthropic’s Claude found 22 vulnerabilities in Firefox over two weeks",
+    "link": "https://techcrunch.com/2026/03/06/anthropics-claude-found-22-vulnerabilities-in-firefox-over-two-weeks/",
+    "source": "TechCrunch",
+    "title_zh": "Anthropic的Claude在两周内在Firefox中发现了22个漏洞"
+  },
+  {
+    "title": "Anthropic’s Pentagon deal is a cautionary tale for startups chasing federal contracts",
+    "link": "https://techcrunch.com/video/anthropics-pentagon-deal-is-a-cautionary-tale-for-startups-chasing-federal-contracts/",
+    "source": "TechCrunch",
+    "title_zh": "Anthropic与五角大楼的交易是初创公司追逐联邦合同的警示故事"
+  },
+  {
+    "title": "Claude’s consumer growth surge continues after Pentagon deal debacle",
+    "link": "https://techcrunch.com/2026/03/06/claudes-consumer-growth-surge-continues-after-pentagon-deal-debacle/",
+    "source": "TechCrunch",
+    "title_zh": "五角大楼交易失败后，克劳德的消费者增长激增仍在继续"
+  }
+]
