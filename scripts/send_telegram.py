@@ -18,7 +18,6 @@ CATEGORY_NAMES = {
     'tech': '📱 科技',
     'finance': '💰 财经',
     'invest': '📈 投资',
-    '',
 }
 
 def send_telegram_message(message):
