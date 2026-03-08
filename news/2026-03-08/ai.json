@@ -1,11 +1,5 @@
 [
   {
-    "title": "I'm Not Consulting an LLM",
-    "link": "https://lr0.org/blog/p/gpt/",
-    "source": "Hacker News",
-    "title_zh": "我不是在咨询法学硕士"
-  },
-  {
     "title": "SWE-CI: Evaluating Agent Capabilities in Maintaining Codebases via CI",
     "link": "https://arxiv.org/abs/2603.03823",
     "source": "Hacker News",
@@ -16,12 +10,6 @@
     "link": "https://github.com/astral-sh/uv/pull/17643",
     "source": "Hacker News",
     "title_zh": "警告PyPy未维护"
-  },
-  {
-    "title": "LLM Writing Tropes.md",
-    "link": "https://tropes.fyi/tropes-md",
-    "source": "Hacker News",
-    "title_zh": "LLM Writing Tropes.md"
   },
   {
     "title": "Autoresearch: Agents researching on single-GPU nanochat training automatically",
@@ -58,5 +46,11 @@
     "link": "https://techcrunch.com/2026/03/06/microsoft-anthropic-claude-remains-available-to-customers-except-the-defense-department/",
     "source": "TechCrunch",
     "title_zh": "微软、谷歌、亚马逊表示， Anthropic Claude仍可供非国防客户使用"
+  },
+  {
+    "title": "Anthropic’s Claude found 22 vulnerabilities in Firefox over two weeks",
+    "link": "https://techcrunch.com/2026/03/06/anthropics-claude-found-22-vulnerabilities-in-firefox-over-two-weeks/",
+    "source": "TechCrunch",
+    "title_zh": "Anthropic的Claude在两周内在Firefox中发现了22个漏洞"
   }
 ]
