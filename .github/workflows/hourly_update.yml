@@ -2,8 +2,8 @@ name: Hourly News Update
 
 on:
   schedule:
-    # 每小时运行一次 (UTC)
-    - cron: '0 * * * *'
+    # 每15分钟运行一次 (UTC) = 每小时整点、15分、30分、45分
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -41,10 +41,6 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          echo "=== Checking secrets ==="
-          if [ -n "$TELEGRAM_TOKEN" ]; then echo "TOKEN: set"; else echo "TOKEN: NOT SET"; fi
-          if [ -n "$TELEGRAM_CHAT_ID" ]; then echo "CHAT_ID: set"; else echo "CHAT_ID: NOT SET"; fi
-          echo "=== Running send_telegram.py ==="
           python scripts/send_telegram.py hourly
           
       - name: Commit and push
