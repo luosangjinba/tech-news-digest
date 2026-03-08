@@ -1,11 +1,5 @@
 [
   {
-    "title": "They all said Hormuz closure would be brief. What if they were wrong?",
-    "link": "https://www.lloydslist.com/LL1156532/They-all-said-Hormuz-closure-would-be-brief-What-if-they-were-wrong",
-    "source": "Hacker News",
-    "title_zh": "他们都说霍尔木兹关闭将是短暂的。如果他们错了怎么办？"
-  },
-  {
     "title": "\"Warn about PyPy being unmaintained\"",
     "link": "https://github.com/astral-sh/uv/pull/17643",
     "source": "Hacker News",
@@ -28,6 +22,12 @@
     "link": "https://cacm.acm.org/research/a-decade-of-docker-containers/",
     "source": "Hacker News",
     "title_zh": "十年的Docker容器"
+  },
+  {
+    "title": "A roadmap for AI, if anyone will listen",
+    "link": "https://techcrunch.com/2026/03/07/a-roadmap-for-ai-if-anyone-will-listen/",
+    "source": "TechCrunch",
+    "title_zh": "人工智能的路线图，如果有人愿意听"
   },
   {
     "title": "Google just gave Sundar Pichai a $692M pay package",
