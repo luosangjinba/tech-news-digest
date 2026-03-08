@@ -1,5 +1,17 @@
 [
   {
+    "title": "SWE-CI: Evaluating Agent Capabilities in Maintaining Codebases via CI",
+    "link": "https://arxiv.org/abs/2603.03823",
+    "source": "Hacker News",
+    "title_zh": "SWE-CI ：通过CI评估代理维护代码库的能力"
+  },
+  {
+    "title": "New Research Reassesses the Value of Agents.md Files for AI Coding",
+    "link": "https://www.infoq.com/news/2026/03/agents-context-file-value-review/",
+    "source": "Hacker News",
+    "title_zh": "新的研究重新评估了agent.md文件对人工智能编码的价值"
+  },
+  {
     "title": "\"Warn about PyPy being unmaintained\"",
     "link": "https://github.com/astral-sh/uv/pull/17643",
     "source": "Hacker News",
@@ -46,17 +58,5 @@
     "link": "https://techcrunch.com/2026/03/07/openai-delays-chatgpts-adult-mode-again/",
     "source": "TechCrunch",
     "title_zh": "OpenAI再次延迟ChatGPT的“成人模式”"
-  },
-  {
-    "title": "Microsoft, Google, Amazon say Anthropic Claude remains available to non-defense customers",
-    "link": "https://techcrunch.com/2026/03/06/microsoft-anthropic-claude-remains-available-to-customers-except-the-defense-department/",
-    "source": "TechCrunch",
-    "title_zh": "微软、谷歌、亚马逊表示， Anthropic Claude仍可供非国防客户使用"
-  },
-  {
-    "title": "Anthropic’s Claude found 22 vulnerabilities in Firefox over two weeks",
-    "link": "https://techcrunch.com/2026/03/06/anthropics-claude-found-22-vulnerabilities-in-firefox-over-two-weeks/",
-    "source": "TechCrunch",
-    "title_zh": "Anthropic的Claude在两周内在Firefox中发现了22个漏洞"
   }
 ]
