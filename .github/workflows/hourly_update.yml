@@ -2,7 +2,6 @@ name: Hourly News Update
 
 on:
   schedule:
-    # 每15分钟运行一次 (UTC) = 每小时整点、15分、30分、45分
     - cron: '*/15 * * * *'
   workflow_dispatch:
 
@@ -32,10 +31,6 @@ jobs:
         run: |
           python scripts/fetch_news.py
           
-      - name: Translate titles
-        run: |
-          python scripts/translate.py
-          
       - name: Push latest news to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -44,7 +39,6 @@ jobs:
           python scripts/send_telegram.py hourly
           
       - name: Commit and push
-        if: success()
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
