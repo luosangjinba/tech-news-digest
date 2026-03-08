@@ -1,15 +1,21 @@
 [
   {
+    "title": "I'm Not Consulting an LLM",
+    "link": "https://lr0.org/blog/p/gpt/",
+    "source": "Hacker News",
+    "title_zh": "我不是在咨询法学硕士"
+  },
+  {
+    "title": "Ask HN: Why there are no actual studies that show AI is more productive?",
+    "link": "https://news.ycombinator.com/item?id=47295628",
+    "source": "Hacker News",
+    "title_zh": "问问HN ：为什么没有实际的研究表明人工智能更有效率？"
+  },
+  {
     "title": "SWE-CI: Evaluating Agent Capabilities in Maintaining Codebases via CI",
     "link": "https://arxiv.org/abs/2603.03823",
     "source": "Hacker News",
     "title_zh": "SWE-CI ：通过CI评估代理维护代码库的能力"
-  },
-  {
-    "title": "New Research Reassesses the Value of Agents.md Files for AI Coding",
-    "link": "https://www.infoq.com/news/2026/03/agents-context-file-value-review/",
-    "source": "Hacker News",
-    "title_zh": "新的研究重新评估了agent.md文件对人工智能编码的价值"
   },
   {
     "title": "\"Warn about PyPy being unmaintained\"",
@@ -28,12 +34,6 @@
     "link": "https://github.com/karpathy/autoresearch",
     "source": "Hacker News",
     "title_zh": "自动搜索：自动研究单GPU纳米聊天训练的代理"
-  },
-  {
-    "title": "A decade of Docker containers",
-    "link": "https://cacm.acm.org/research/a-decade-of-docker-containers/",
-    "source": "Hacker News",
-    "title_zh": "十年的Docker容器"
   },
   {
     "title": "A roadmap for AI, if anyone will listen",
