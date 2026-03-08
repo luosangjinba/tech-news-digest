@@ -70,7 +70,7 @@ def format_news_for_push(news, category, max_items=10):
     
     # 取前几条
     for i, item in enumerate(news[:max_items], 1):
-        title_zh = item.get('title_zh', item.get('title', ''))
+        title_zh = item.get('title', '')
         link = item.get('link', '')
         lines.append(f"{i}. <a href=\"{link}\">{title_zh}</a>")
     
