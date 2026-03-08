@@ -33,6 +33,13 @@ jobs:
         run: |
           python scripts/translate.py
           
+      - name: Debug: Check news files
+        run: |
+          echo "=== News files ==="
+          find news -name "*.json" -type f
+          echo "=== Today's news ==="
+          cat news/$(date +%Y-%m-%d)/ai.json 2>/dev/null | head -5 || echo "No ai.json"
+          
       - name: Push latest news to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
