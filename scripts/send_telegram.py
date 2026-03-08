@@ -15,10 +15,10 @@ TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN', '')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
 
 CATEGORY_NAMES = {
-    'ai': '🤖 AI 人工智能',
-    'robotics': '🦾 机器人',
-    'biotech': '🧬 生物医药',
-    'aerospace': '🚀 航空航天',
+    'tech': '📱 科技',
+    'finance': '💰 财经',
+    'invest': '📈 投资',
+    '',
 }
 
 def send_telegram_message(message):
@@ -85,7 +85,7 @@ def push_daily_summary(hours=24):
     message += f"⏰ 更新时间: {now.strftime('%H:%M')}\n"
     message += "=" * 30 + "\n"
     
-    categories = ['ai', 'robotics', 'biotech', 'aerospace']
+    categories = ['tech', 'finance', 'invest']
     total = 0
     
     for cat in categories:
@@ -112,7 +112,7 @@ def push_hourly_update():
     message += f"⏰ {now.strftime('%H:%M')}\n"
     message += "=" * 30 + "\n"
     
-    categories = ['ai', 'robotics', 'biotech', 'aerospace']
+    categories = ['tech', 'finance', 'invest']
     total = 0
     
     for cat in categories:
