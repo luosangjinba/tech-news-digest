@@ -14,7 +14,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+        with:
+          ref: main
+          fetch-depth: 0
+          
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -33,21 +36,19 @@ jobs:
         run: |
           python scripts/translate.py
           
-      - name: Debug: Check news files
-        run: |
-          echo "=== News files ==="
-          find news -name "*.json" -type f
-          echo "=== Today's news ==="
-          cat news/$(date +%Y-%m-%d)/ai.json 2>/dev/null | head -5 || echo "No ai.json"
-          
       - name: Push latest news to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          echo "=== Debug: Checking environment ==="
+          echo "TOKEN set: ${{ bool(secrets.TELEGRAM_TOKEN) }}"
+          echo "CHAT_ID set: ${{ bool(secrets.TELEGRAM_CHAT_ID) }}"
+          echo "=== Running send_telegram.py ==="
           python scripts/send_telegram.py hourly
           
       - name: Commit and push
+        if: success()
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
