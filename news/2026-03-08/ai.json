@@ -6,22 +6,22 @@
     "title_zh": "我不是在咨询法学硕士"
   },
   {
-    "title": "Ask HN: Why there are no actual studies that show AI is more productive?",
-    "link": "https://news.ycombinator.com/item?id=47295628",
-    "source": "Hacker News",
-    "title_zh": "问问HN ：为什么没有实际的研究表明人工智能更有效率？"
-  },
-  {
     "title": "SWE-CI: Evaluating Agent Capabilities in Maintaining Codebases via CI",
     "link": "https://arxiv.org/abs/2603.03823",
     "source": "Hacker News",
     "title_zh": "SWE-CI ：通过CI评估代理维护代码库的能力"
   },
   {
-    "title": "\"Warn about PyPy being unmaintained\"",
+    "title": "Warn about PyPy being unmaintained",
     "link": "https://github.com/astral-sh/uv/pull/17643",
     "source": "Hacker News",
-    "title_zh": "\"警告PyPy未维护\""
+    "title_zh": "警告PyPy未维护"
+  },
+  {
+    "title": "LLM Writing Tropes.md",
+    "link": "https://tropes.fyi/tropes-md",
+    "source": "Hacker News",
+    "title_zh": "LLM Writing Tropes.md"
   },
   {
     "title": "Autoresearch: Agents researching on single-GPU nanochat training automatically",
