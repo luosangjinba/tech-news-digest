@@ -33,11 +33,10 @@ NEWS_SOURCES = {
     ],
 }
 
-# 关键词过滤 - 保留商业/投资/市场相关
+# 关键词过滤
 KEYWORDS = [
     '融资', '投资', 'IPO', '上市', '财报', '营收', '利润', '估值',
-    '收购', '并购', '融资', '投资', '融资', '融资',
-    '发布', '产品', '上线', '推出', '新功能',
+    '收购', '并购', '产品', '发布', '上线', '推出', '新功能',
     '市场', '趋势', '行业', '预测', '分析',
     'AI', '人工智能', '大模型', 'GPT', 'Sora',
     '芯片', '半导体', 'GPU', '算力',
@@ -46,21 +45,17 @@ KEYWORDS = [
     'SpaceX', 'NASA', '火箭', '卫星',
     '降息', '加息', '通胀', '美联储', '央行',
     '人民币', '美元', '汇率', 'A股', '美股', '港股',
-    '涨停', '跌幅', '暴涨', '暴跌', '大涨', '大跌',
 ]
 
-# 排除关键词
 EXCLUDE_KEYWORDS = [
     '招聘', '求职', '面试', '工资', '薪资',
     '教程', '入门', '学习', '课程', '培训',
-    '开源', 'GitHub', '代码', '技术博客',
 ]
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-NEWS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), 'news')
+# 使用当前目录下的 news 文件夹
+NEWS_DIR = 'news'
 
 def fetch_feed(url, source_name):
-    """获取RSS源"""
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -74,7 +69,6 @@ def fetch_feed(url, source_name):
         return None
 
 def fetch_json(url, source_name):
-    """获取JSON API"""
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         resp = requests.get(url, headers=headers, timeout=15)
@@ -84,7 +78,6 @@ def fetch_json(url, source_name):
         return None
 
 def parse_feed(xml_text, source_name):
-    """解析RSS"""
     items = []
     try:
         feed = feedparser.parse(xml_text)
@@ -102,12 +95,9 @@ def parse_feed(xml_text, source_name):
     return items
 
 def filter_by_keywords(items):
-    """根据关键词过滤"""
     filtered = []
     for item in items:
         title = item['title']
-        
-        # 排除
         exclude = False
         for kw in EXCLUDE_KEYWORDS:
             if kw.lower() in title.lower():
@@ -115,17 +105,13 @@ def filter_by_keywords(items):
                 break
         if exclude:
             continue
-        
-        # 包含
         for kw in KEYWORDS:
             if kw.lower() in title.lower():
                 filtered.append(item)
                 break
-    
     return filtered[:15] if filtered else items[:10]
 
 def fetch_category_news(category):
-    """获取某个分类的新闻"""
     print(f"\n获取 {category} 新闻...")
     all_items = []
     
@@ -134,7 +120,6 @@ def fetch_category_news(category):
         return []
     
     for source in NEWS_SOURCES[category]:
-        # JSON API
         if 'xueqiu' in source['url'] or 'wallstreetcn' in source['url']:
             data = fetch_json(source['url'], source['name'])
             if data:
@@ -156,14 +141,12 @@ def fetch_category_news(category):
                 all_items.extend(items)
                 print(f"  {source['name']}: {len(items)} 条")
         else:
-            # RSS
             xml = fetch_feed(source['url'], source['name'])
             if xml:
                 items = parse_feed(xml, source['name'])
                 all_items.extend(items)
                 print(f"  {source['name']}: {len(items)} 条")
     
-    # 去重
     seen = set()
     unique_items = []
     for item in all_items:
@@ -171,12 +154,10 @@ def fetch_category_news(category):
             seen.add(item['link'])
             unique_items.append(item)
     
-    # 关键词过滤
     filtered = filter_by_keywords(unique_items)
     return filtered[:10]
 
 def save_news(category, items):
-    """保存新闻到文件"""
     today = datetime.now().strftime('%Y-%m-%d')
     date_dir = os.path.join(NEWS_DIR, today)
     os.makedirs(date_dir, exist_ok=True)
@@ -189,7 +170,6 @@ def save_news(category, items):
     return file_path
 
 def main():
-    """主函数"""
     print("=" * 50)
     print("财经商业新闻获取")
     print("=" * 50)
