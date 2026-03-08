@@ -26,6 +26,13 @@ jobs:
       - name: Fetch news
         run: python scripts/fetch_news.py
       
+      - name: Push to Telegram
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python scripts/send_telegram.py hourly || echo "Push failed, continuing..."
+      
       - name: Commit and push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
