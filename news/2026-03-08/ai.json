@@ -1,5 +1,17 @@
 [
   {
+    "title": "They all said Hormuz closure would be brief. What if they were wrong?",
+    "link": "https://www.lloydslist.com/LL1156532/They-all-said-Hormuz-closure-would-be-brief-What-if-they-were-wrong",
+    "source": "Hacker News",
+    "title_zh": "他们都说霍尔木兹关闭将是短暂的。如果他们错了怎么办？"
+  },
+  {
+    "title": "\"Warn about PyPy being unmaintained\"",
+    "link": "https://github.com/astral-sh/uv/pull/17643",
+    "source": "Hacker News",
+    "title_zh": "\"警告PyPy未维护\""
+  },
+  {
     "title": "LLM Writing Tropes.md",
     "link": "https://tropes.fyi/tropes-md",
     "source": "Hacker News",
@@ -46,17 +58,5 @@
     "link": "https://techcrunch.com/2026/03/06/anthropics-claude-found-22-vulnerabilities-in-firefox-over-two-weeks/",
     "source": "TechCrunch",
     "title_zh": "Anthropic的Claude在两周内在Firefox中发现了22个漏洞"
-  },
-  {
-    "title": "Anthropic’s Pentagon deal is a cautionary tale for startups chasing federal contracts",
-    "link": "https://techcrunch.com/video/anthropics-pentagon-deal-is-a-cautionary-tale-for-startups-chasing-federal-contracts/",
-    "source": "TechCrunch",
-    "title_zh": "Anthropic与五角大楼的交易是初创公司追逐联邦合同的警示故事"
-  },
-  {
-    "title": "Claude’s consumer growth surge continues after Pentagon deal debacle",
-    "link": "https://techcrunch.com/2026/03/06/claudes-consumer-growth-surge-continues-after-pentagon-deal-debacle/",
-    "source": "TechCrunch",
-    "title_zh": "五角大楼交易失败后，克劳德的消费者增长激增仍在继续"
   }
 ]
