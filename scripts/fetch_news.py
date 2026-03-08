@@ -9,6 +9,13 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
+try:
+    import feedparser
+except ImportError:
+    import subprocess
+    subprocess.run(['pip', 'install', 'feedparser'])
+    import feedparser
+
 # 新闻源配置
 NEWS_SOURCES = {
     'ai': [
@@ -29,18 +36,18 @@ NEWS_SOURCES = {
     ],
 }
 
-# 关键词过滤（确保是相关领域的新闻）
+# 关键词过滤
 KEYWORDS = {
-    'ai': ['AI', 'artificial intelligence', 'machine learning', 'deep learning', 'GPT', 'LLM', 'neural', 'OpenAI', 'Google AI', 'Microsoft AI', 'anthropic', 'Claude', 'ChatGPT'],
-    'robotics': ['robot', 'robotics', 'drone', 'automation', 'humanoid', 'Boston Dynamics', ' quadruped'],
-    'biotech': ['biotech', 'biotechnology', 'drug', 'clinical trial', 'vaccine', 'gene', 'CRISPR', 'FDA', 'pharmaceutical', 'medicine'],
-    'aerospace': ['space', 'NASA', 'SpaceX', 'rocket', 'satellite', 'Mars', 'astronaut', 'ISS', 'launch', 'rocket'],
+    'ai': ['AI', 'artificial intelligence', 'machine learning', 'deep learning', 'GPT', 'LLM', 'neural', 'OpenAI', 'Google AI', 'Microsoft AI', 'anthropic', 'Claude', 'ChatGPT', 'robot', 'automation'],
+    'robotics': ['robot', 'robotics', 'drone', 'automation', 'humanoid', 'Boston Dynamics', 'quadruped', 'autonomous'],
+    'biotech': ['biotech', 'biotechnology', 'drug', 'clinical trial', 'vaccine', 'gene', 'CRISPR', 'FDA', 'pharmaceutical', 'medicine', 'health'],
+    'aerospace': ['space', 'NASA', 'SpaceX', 'rocket', 'satellite', 'Mars', 'astronaut', 'ISS', 'launch', 'aerospace'],
 }
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-NEWS_DIR = os.path.join(SCRIPT_DIR, 'news')
+NEWS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), 'news')
 
-def fetch_rss(url, source_name):
+def fetch_feed(url, source_name):
     """获取RSS源"""
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
@@ -51,32 +58,29 @@ def fetch_rss(url, source_name):
         print(f"获取 {source_name} 失败: {e}")
         return None
 
-def parse_rss(xml_text, source_name):
-    """简单解析RSS"""
-    import re
+def parse_feed(xml_text, source_name):
+    """解析RSS"""
     items = []
-    
-    # 提取title和link
-    titles = re.findall(r'<title><!\[CDATA\[(.*?)\]\]></title>|<title>(.*?)</title>', xml_text)
-    links = re.findall(r'<link>(.*?)</link>', xml_text)
-    
-    # 跳过第一个（通常是feed标题）
-    for i in range(1, min(len(titles), 20)):
-        title = titles[i][0] or titles[i][1] if titles[i] else ''
-        link = links[i] if i < len(links) else ''
-        if title and link:
-            items.append({
-                'title': title.strip(),
-                'link': link.strip(),
-                'source': source_name
-            })
+    try:
+        feed = feedparser.parse(xml_text)
+        for entry in feed.entries[:15]:
+            title = entry.get('title', '').strip()
+            link = entry.get('link', '').strip()
+            if title and link:
+                items.append({
+                    'title': title,
+                    'link': link,
+                    'source': source_name
+                })
+    except Exception as e:
+        print(f"解析 {source_name} 失败: {e}")
     
     return items
 
 def filter_by_keywords(items, category):
     """根据关键词过滤"""
     if category not in KEYWORDS:
-        return items
+        return items[:10]
     
     filtered = []
     for item in items:
@@ -86,7 +90,7 @@ def filter_by_keywords(items, category):
                 filtered.append(item)
                 break
     
-    return filtered if filtered else items[:10]  # 如果过滤后为空，返回原列表
+    return filtered[:10] if filtered else items[:10]
 
 def fetch_category_news(category):
     """获取某个分类的新闻"""
@@ -98,9 +102,9 @@ def fetch_category_news(category):
         return []
     
     for source in NEWS_SOURCES[category]:
-        xml = fetch_rss(source['url'], source['name'])
+        xml = fetch_feed(source['url'], source['name'])
         if xml:
-            items = parse_rss(xml, source['name'])
+            items = parse_feed(xml, source['name'])
             all_items.extend(items)
             print(f"  {source['name']}: {len(items)} 条")
     

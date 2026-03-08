@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 feedparser
+          pip install requests feedparser
           
       - name: Fetch news
         run: |
