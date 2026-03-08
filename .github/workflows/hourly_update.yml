@@ -41,9 +41,9 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          echo "=== Debug: Checking environment ==="
-          echo "TOKEN set: ${{ bool(secrets.TELEGRAM_TOKEN) }}"
-          echo "CHAT_ID set: ${{ bool(secrets.TELEGRAM_CHAT_ID) }}"
+          echo "=== Checking secrets ==="
+          if [ -n "$TELEGRAM_TOKEN" ]; then echo "TOKEN: set"; else echo "TOKEN: NOT SET"; fi
+          if [ -n "$TELEGRAM_CHAT_ID" ]; then echo "CHAT_ID: set"; else echo "CHAT_ID: NOT SET"; fi
           echo "=== Running send_telegram.py ==="
           python scripts/send_telegram.py hourly
           
