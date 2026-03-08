@@ -1,8 +1,9 @@
-name: Hourly News Update
+name: Daily News Update
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # 每天 UTC 0点 = 北京时间 8:00
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -26,11 +27,6 @@ jobs:
       - name: Fetch news
         run: python scripts/fetch_news.py
       
-      - name: Debug secrets
-        run: |
-          echo "TOKEN set: ${{ secrets.TELEGRAM_TOKEN != '' }}"
-          echo "CHAT_ID set: ${{ secrets.TELEGRAM_CHAT_ID != '' }}"
-      
       - name: Push to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -43,5 +39,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add news/ index.html
-          git diff --staged --quiet || git commit -m "Update news $(date +%Y-%m-%d\ %H:%M)"
+          git diff --staged --quiet || git commit -m "Update news $(date +%Y-%m-%d)"
           git push
