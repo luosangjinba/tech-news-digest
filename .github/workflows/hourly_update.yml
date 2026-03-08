@@ -26,12 +26,17 @@ jobs:
       - name: Fetch news
         run: python scripts/fetch_news.py
       
+      - name: Debug secrets
+        run: |
+          echo "TOKEN set: ${{ secrets.TELEGRAM_TOKEN != '' }}"
+          echo "CHAT_ID set: ${{ secrets.TELEGRAM_CHAT_ID != '' }}"
+      
       - name: Push to Telegram
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          python scripts/send_telegram.py hourly || echo "Push failed, continuing..."
+          python scripts/send_telegram.py hourly || echo "Push failed"
       
       - name: Commit and push
         run: |
